@@ -16,7 +16,7 @@ To use **APIScout**, you need Go installed on your system.
 Clone the repository:
 
 ```
-git clone https://github.com/Harshj054/APIScout.git
+git clone https://github.com/Insider-HackZ/APIScout.git  
 cd APIScout
 chmod +x setup.sh
 sudo ./setup.sh
