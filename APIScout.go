@@ -36,7 +36,7 @@ Examples:
 
 func checkForNewVersion() {
 	const localVersion = "v0.0.1"
-	repoURL := "https://api.github.com/repos/Insider-HackZ/--tool--name--/releases/latest"
+	repoURL := "https://api.github.com/repos/Insider-HackZ/APIScout/releases/latest"
 
 	resp, err := http.Get(repoURL)
 	if err != nil {
@@ -71,19 +71,19 @@ func checkForNewVersion() {
 		if choice == "y" {
 			fmt.Printf("Updating to version %s...\n", latestVersion)
 
-			cmd := exec.Command("wget", "-O", "MergerHunt.go", "https://raw.githubusercontent.com/Insider-HackZ/--tool--name--/main/MergerHunt.go")
+			cmd := exec.Command("wget", "-O", "APIScout.go", "https://raw.githubusercontent.com/Insider-HackZ/APIScout/refs/heads/main/APIScout.go")
 			if err := cmd.Run(); err != nil {
 				fmt.Println("Error updating script:", err)
 				return
 			}
 
-			cmd9 := exec.Command("bash", "-c", "sudo go build MergerHunt.go")
+			cmd9 := exec.Command("bash", "-c", "sudo go build APIScout.go")
 			if err := cmd9.Run(); err != nil {
 				fmt.Println("Error building script:", err)
 				return
 			}
 
-			cmd10 := exec.Command("bash", "-c", "sudo mv --tool--name-- /usr/local/bin")
+			cmd10 := exec.Command("bash", "-c", "sudo mv APIScout /usr/local/bin")
 			if err := cmd10.Run(); err != nil {
 				fmt.Println("Error moving binary:", err)
 				return
@@ -99,7 +99,6 @@ func checkForNewVersion() {
 		fmt.Printf("You are using the latest version (%s).\n", localVersion)
 	}
 }
-
 var regexPatterns = map[string]string{
 	"google_api":                   `AIza[0-9A-Za-z-_]{35}`,
 	"google_captcha":               `6L[0-9A-Za-z-_]{38}|^6[0-9a-zA-Z_-]{39}$`,
@@ -144,7 +143,7 @@ func sendRequest(wg *sync.WaitGroup, endpoint string, results chan<- string) {
 
 	resp, err := http.Get(endpoint)
 	if err != nil {
-		fmt.Println("Error sending request:", err)
+		// fmt.Println("Error sending request:", err)
 		results <- ""
 		return
 	}
@@ -152,7 +151,7 @@ func sendRequest(wg *sync.WaitGroup, endpoint string, results chan<- string) {
 
 	body, err := io.ReadAll(resp.Body)
 	if err != nil {
-		fmt.Println("Error reading response:", err)
+		// fmt.Println("Error reading response:", err)
 		results <- ""
 		return
 	}
