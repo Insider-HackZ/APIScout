@@ -99,17 +99,19 @@ func checkForNewVersion() {
 		fmt.Printf("You are using the latest version (%s).\n", localVersion)
 	}
 }
+
 var regexPatterns = map[string]string{
 	"google_api":                   `AIza[0-9A-Za-z-_]{35}`,
+	"firebase":                     `AAAA[A-Za-z0-9_-]{7}:[A-Za-z0-9_-]{140}`,
 	"google_captcha":               `6L[0-9A-Za-z-_]{38}|^6[0-9a-zA-Z_-]{39}$`,
 	"google_oauth":                 `ya29\.[0-9A-Za-z\-_]+`,
 	"amazon_aws_access_key_id":     `A[SK]IA[0-9A-Z]{16}`,
-	"amazon_mws_auth_toke":         `amzn\\.mws\\.[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}`,
+	"amazon_mws_auth_token":        `amzn\\.mws\\.[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}`,
 	"amazon_aws_url":               `s3\.amazonaws.com[/]+|[a-zA-Z0-9_-]*\.s3\.amazonaws.com`,
+	"amazon_aws_url2":              `([a-zA-Z0-9-\.\_]+\.s3\.amazonaws\.com|s3://[a-zA-Z0-9-\.\_]+|s3-[a-zA-Z0-9-\.\_\/]+|s3.amazonaws.com/[a-zA-Z0-9-\.\_]+|s3.console.aws.amazon.com/s3/buckets/[a-zA-Z0-9-\.\_]+)`,
 	"facebook_access_token":        `EAACEdEose0cBA[0-9A-Za-z]+`,
-	"authorization_basic":          `basic\s*[a-zA-Z0-9=:_\+\/-]+`,
-	"authorization_bearer":         `bearer\s*[a-zA-Z0-9_\-\.=:_\+\/]+`,
-	"authorization_api":            `api[key|\s*]+[a-zA-Z0-9_\-]+`,
+	"authorization_bearer":         `bearer [a-zA-Z0-9_\-\.=:_\+\/]{5,100}`,
+	"authorization_api":            `api[key|_key|\s+]+[a-zA-Z0-9_\-]{5,100}`,
 	"mailgun_api_key":              `key-[0-9a-zA-Z]{32}`,
 	"twilio_api_key":               `SK[0-9a-fA-F]{32}`,
 	"twilio_account_sid":           `AC[a-zA-Z0-9_\-]{32}`,
@@ -125,7 +127,11 @@ var regexPatterns = map[string]string{
 	"ssh_dc_private_key":           `-----BEGIN EC PRIVATE KEY-----`,
 	"pgp_private_block":            `-----BEGIN PGP PRIVATE KEY BLOCK-----`,
 	"json_web_token":               `ey[A-Za-z0-9-_=]+\.[A-Za-z0-9-_=]+\.?[A-Za-z0-9-_.+/=]*$`,
+	"slack_token":                  `\"api_token\":\"(xox[a-zA-Z]-[a-zA-Z0-9-]+)\"`,
+	"SSH_privKey":                  `([-]+BEGIN [^\s]+ PRIVATE KEY[-]+[\s]*[^-]*[-]+END [^\s]+ PRIVATE KEY[-]+)`,
+	"heroku_api_key":               `[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{4}-[0-9a-fA-F]{12}`,
 }
+
 
 func checkForAPIKeyLeak(response string) (bool, string, string) {
 	for keyName, pattern := range regexPatterns {
@@ -351,6 +357,7 @@ func endpoint_finder(domain string) {
 }
 
 func main() {
+	Rm_extra()
 	banner()
 	flag_check()
 	Rm_extra()
