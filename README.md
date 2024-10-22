@@ -2,6 +2,12 @@
 
 APIScout is a powerful tool designed for cybersecurity pentesters to find leaked API keys and sensitive information across website endpoints. It scans domains or lists of URLs to detect API key leaks based on predefined regular expressions for various services such as Google, AWS, GitHub, and more.
 
+
+
+https://github.com/user-attachments/assets/faf273fc-294b-4210-9839-fd3acb63bffe
+
+
+
 ## Features
 
 - Supports scanning a single domain or multiple domains from a file.
